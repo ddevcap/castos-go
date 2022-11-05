@@ -1,4 +1,7 @@
-# Castos golang Client
+# Castos Golang Client
+
+## About
+This client allows you to integrate with the Castos API using the golang programming language. More information about Castos here: https://castos.com/
 
 ## Install
 ```bash
