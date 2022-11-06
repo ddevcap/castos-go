@@ -8,13 +8,14 @@ import (
 )
 
 const (
-	BaseUrl    = "https://app.castos.com/api/v2"
-	DateFormat = "2006-01-02 15:04:05"
+	baseUrl    = "https://app.castos.com/api/v2"
+	dateFormat = "2006-01-02 15:04:05"
 )
 
+// Client exposes the Podcast, Episode, PrivateSubscriber and Category services.
 type Client struct {
-	Token              string
-	BaseUrl            string
+	token              string
+	baseUrl            string
 	QueryParams        map[string]string
 	Headers            map[string]string
 	http               *http.Client
@@ -51,9 +52,10 @@ func (t *authTransport) RoundTrip(req *http.Request) (*http.Response, error) {
 	return t.defaultTransport.RoundTrip(req)
 }
 
+// NewClient initializes a new Castos client that exposes the Podcast, Episode, PrivateSubscriber and Category services.
 func NewClient(token string) *Client {
 	c := &Client{
-		BaseUrl: BaseUrl,
+		baseUrl: baseUrl,
 		http: &http.Client{
 			Transport: &authTransport{
 				token:            token,
@@ -72,7 +74,7 @@ func NewClient(token string) *Client {
 }
 
 func (c *Client) newRequest(method, path string, query url.Values, body io.Reader) (*http.Request, error) {
-	u, err := url.Parse(BaseUrl + path)
+	u, err := url.Parse(c.baseUrl + path)
 	if err != nil {
 		return nil, err
 	}

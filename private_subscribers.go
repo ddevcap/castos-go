@@ -8,6 +8,7 @@ import (
 	"time"
 )
 
+// PrivateSubscribersService provides crud actions on private subscribers.
 type PrivateSubscribersService service
 
 type PrivateSubscriber struct {
@@ -37,12 +38,13 @@ func (ps *PrivateSubscriber) UnmarshalJSON(data []byte) error {
 		return err
 	}
 
-	ps.CreatedAt, _ = time.Parse(DateFormat, aux.CreatedAt)
-	ps.UpdatedAt, _ = time.Parse(DateFormat, aux.UpdatedAt)
+	ps.CreatedAt, _ = time.Parse(dateFormat, aux.CreatedAt)
+	ps.UpdatedAt, _ = time.Parse(dateFormat, aux.UpdatedAt)
 
 	return nil
 }
 
+// GetAll returns al private subscribers that belong to the provided podcast id.
 func (service *PrivateSubscribersService) GetAll(podcastId int64) ([]*PrivateSubscriber, error) {
 	path := "/private-subscribers"
 

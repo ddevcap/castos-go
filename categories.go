@@ -8,13 +8,16 @@ import (
 	"strconv"
 )
 
+// CategoriesService provides access to all Castos podcast category options.
 type CategoriesService service
 
+// Category represents a Castos podcast category option.
 type Category struct {
 	Id   int64  `json:"id"`
 	Name string `json:"name"`
 }
 
+// GetAll returns al available podcast categories.
 func (service *CategoriesService) GetAll() ([]*Category, error) {
 	path := fmt.Sprintf("/get-categories")
 

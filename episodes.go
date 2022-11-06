@@ -8,8 +8,10 @@ import (
 	"time"
 )
 
+// EpisodesService provides crud actions on podcast episodes.
 type EpisodesService service
 
+// Episode represents a Castos podcast episode.
 type Episode struct {
 	Id               int64     `json:"id"`
 	PostId           string    `json:"post_id"`
@@ -48,14 +50,15 @@ func (e *Episode) UnmarshalJSON(data []byte) error {
 		return err
 	}
 
-	e.CreatedAt, _ = time.Parse(DateFormat, aux.CreatedAt)
-	e.UpdatedAt, _ = time.Parse(DateFormat, aux.UpdatedAt)
+	e.CreatedAt, _ = time.Parse(dateFormat, aux.CreatedAt)
+	e.UpdatedAt, _ = time.Parse(dateFormat, aux.UpdatedAt)
 
 	e.Explicit = aux.Explicit == 1
 
 	return nil
 }
 
+// GetAll returns all episodes that belong to the provided podcast id.
 func (service *EpisodesService) GetAll(podcastId int64) ([]*Episode, error) {
 	path := fmt.Sprintf("/podcasts/%d/episodes", podcastId)
 
@@ -74,6 +77,7 @@ func (service *EpisodesService) GetAll(podcastId int64) ([]*Episode, error) {
 	return episodes, nil
 }
 
+// Get returns a specific episode belonging to the provided podcast and episode id combination.
 func (service *EpisodesService) Get(podcastId, id int64) (*Episode, error) {
 	path := fmt.Sprintf("/podcasts/%d/episodes/%d", podcastId, id)
 
