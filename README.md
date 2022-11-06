@@ -1,3 +1,5 @@
+[![Go Reference](https://pkg.go.dev/badge/github.com/ddevcap/castos-go.svg)](https://pkg.go.dev/github.com/ddevcap/castos-go)
+
 # Castos Golang Client
 
 ## About
