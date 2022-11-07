@@ -40,7 +40,6 @@ func TestClientAuthTransport(t *testing.T) {
 	defer svr.Close()
 
 	client := Client{
-		token:   token,
 		baseUrl: svr.URL,
 		http: &http.Client{
 			Transport: &authTransport{
