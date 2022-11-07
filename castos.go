@@ -2,6 +2,7 @@ package castos
 
 import (
 	"encoding/json"
+	"errors"
 	"io"
 	"net/http"
 	"net/url"
@@ -14,7 +15,6 @@ const (
 
 // Client exposes the Podcast, Episode, PrivateSubscriber and Category services.
 type Client struct {
-	token              string
 	baseUrl            string
 	QueryParams        map[string]string
 	Headers            map[string]string
@@ -53,7 +53,11 @@ func (t *authTransport) RoundTrip(req *http.Request) (*http.Response, error) {
 }
 
 // NewClient initializes a new Castos client that exposes the Podcast, Episode, PrivateSubscriber and Category services.
-func NewClient(token string) *Client {
+func NewClient(token string) (*Client, error) {
+	if token == "" {
+		return nil, errors.New("empty token")
+	}
+
 	c := &Client{
 		baseUrl: baseUrl,
 		http: &http.Client{
@@ -70,7 +74,7 @@ func NewClient(token string) *Client {
 	c.PrivateSubscribers = (*PrivateSubscribersService)(&c.commonService)
 	c.Categories = (*CategoriesService)(&c.commonService)
 
-	return c
+	return c, nil
 }
 
 func (c *Client) newRequest(method, path string, query url.Values, body io.Reader) (*http.Request, error) {
